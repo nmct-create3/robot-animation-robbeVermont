@@ -43,6 +43,13 @@ html {
 }
 
 body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--global-html-backgroundColor);
+  flex-direction: column;
+  gap: 2rem;
 }
 
 /*
@@ -133,15 +140,71 @@ body {
 */
 
 .c-robot {
+  --c-robot-animation-iteration-count: infinite;
+  --c-robot-animation-duration: 0.75s;
+  --c-robot-animation-direction: alternate;
+  --c-robot-animation-timing-function: ease-in-out;
+  max-width: 400px;
+  fill: var(--global-color-front);
+  /* animation: rotate infinite 5s; */
 }
 
 .c-robot__shadow {
+  fill: var(--c-robot__shadow-fill, Black);
+  opacity: 0.1;
 }
 
+.c-robot--css-anim #Robot {
+  animation: robotHover var(--c-robot-animation-iteration-count)
+    var(--c-robot-animation-duration) var(--c-robot-animation-direction)
+    var(--c-robot-animation-timing-function);
+}
+.c-robot--css-anim #Shadow {
+  animation: shadowPulse var(--c-robot-animation-iteration-count)
+    var(--c-robot-animation-duration) var(--c-robot-animation-direction)
+    var(--c-robot-animation-timing-function);
+  transform-origin: 50% 100%;
+}
+
+.c-robot--css-anim #Fire {
+  animation: vibrate 0.02s alternate infinite;
+}
+
+@keyframes shadowPulse {
+  100% {
+    transform: scale(0.75);
+  }
+}
+
+@keyframes robotHover {
+  0% {
+    transform: translateY(2.5%);
+  }
+  100% {
+    transform: translateY(-2.5%);
+  }
+}
+
+@keyframes vibrate {
+  0% {
+    transform: translateX(1px);
+  }
+  100% {
+    transform: translateX(-1px);
+  }
+}
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 /*
     Component: Controls
 */
+
+.c-controls {
+}
 
 /*------------------------------------*\
 #UTILITIES
@@ -174,18 +237,18 @@ body {
     text-decoration: underline;
   }
   a[href]:after {
-    content: ' (' attr(href) ')';
+    content: " (" attr(href) ")";
   }
   abbr[title]:after {
-    content: ' (' attr(title) ')';
+    content: " (" attr(title) ")";
   }
   /*
     * Don't show links that are fragment identifiers,
     * or use the `javascript:` pseudo protocol
     */
-  a[href^='#']:after,
-  a[href^='javascript:']:after {
-    content: '';
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: "";
   }
   pre {
     white-space: pre-wrap !important;
